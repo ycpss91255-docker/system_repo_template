@@ -1,0 +1,15 @@
+# 各模組怎麼跑起來。映像版本全部來自 versions/*.env（變數 ALPHA_TAG 等）
+name: demo-system
+services:
+  alpha:
+    image: ${REGISTRY}/alpha:${ALPHA_TAG}
+    env_file:
+      - configs/${TARGET}/target.env
+  beta:
+    image: ${REGISTRY}/beta:${BETA_TAG}
+    env_file:
+      - configs/${TARGET}/target.env
+  gamma:
+    image: ${REGISTRY}/gamma:${GAMMA_TAG}
+    env_file:
+      - configs/${TARGET}/target.env
