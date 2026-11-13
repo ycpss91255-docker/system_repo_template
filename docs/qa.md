@@ -22,7 +22,7 @@ A（已確定）：release 一律釘 `x.y.z` tag，這是團隊規範，發布�
 A（已確定）：不可以。`just release` 不會覆蓋既有版本檔；要修正就發新版本。
 
 **Q：為什麼不用映像 digest 來鎖定？**
-A（已確定）：團隊規範 tag 不可變，所以直接用 tag 即可。若日後 registry 無法保證 tag 不可覆寫，再重新評估。
+A（已確定）：團隊規範 tag 不可變，所以直接用 tag 即可。能由 registry 強制「tag 不可覆寫」就優先由 registry 管理，規範作為補充（見 [#5](https://github.com/ycpss91255-docker/system_repo_template/issues/5)）。若 registry 無法做到，再重新評估是否改記 digest。
 
 **Q：system repo 的 release 下載時，會連同其他 repo 一起帶下來嗎？**
 A（已確定）：不會。git tag 或 release 的原始碼壓縮檔只含 system repo 自己的檔案；各模組由 registry 以映像提供。討論初期曾評估過「離線部署包」（把各 repo 打包成 tarball），改為映像部署後就不需要了。
@@ -82,8 +82,19 @@ A（已確定）：統一的使用者介面。底下目前是 `docker compose` �
 
 ## 尚未涵蓋 / 未驗證
 
-- bot 自動升級 PR（[#1](https://github.com/ycpss91255-docker/system_repo_template/issues/1)、[#2](https://github.com/ycpss91255-docker/system_repo_template/issues/2)）、完整系統驗證 CI（[#3](https://github.com/ycpss91255-docker/system_repo_template/issues/3)）：尚未實作。
-- 斷網、中途失敗的更多情境，只驗證了「映像不存在」這一種。
-- 機密的管理方式尚未決定。
-- 範例用本機 registry 與 `localhost:5555`；真實 registry 的認證流程未涵蓋。
-- 示範只在 Linux + docker compose v5 + just 1.x 上跑過。
+以下都已開成 issue 追蹤：
+
+| 項目 | issue |
+|---|---|
+| bot 自動升級 PR；觸發策略（合併、通知、去重） | [#1](https://github.com/ycpss91255-docker/system_repo_template/issues/1)、[#2](https://github.com/ycpss91255-docker/system_repo_template/issues/2) |
+| system repo 的完整系統驗證 CI | [#3](https://github.com/ycpss91255-docker/system_repo_template/issues/3) |
+| 機密管理 | [#4](https://github.com/ycpss91255-docker/system_repo_template/issues/4) |
+| registry 認證與權限；tag 不可覆寫由 registry 強制 | [#5](https://github.com/ycpss91255-docker/system_repo_template/issues/5) |
+| 更多部署失敗情境（斷網、中途中斷、啟動失敗）與舊映像清理 | [#6](https://github.com/ycpss91255-docker/system_repo_template/issues/6) |
+| 實際部署目標環境（docker compose 外掛、just 版本、CPU 架構） | [#7](https://github.com/ycpss91255-docker/system_repo_template/issues/7) |
+| 測試階段使用 SHA tag 映像的流程 | [#8](https://github.com/ycpss91255-docker/system_repo_template/issues/8) |
+| release 發佈自動化與保護 | [#9](https://github.com/ycpss91255-docker/system_repo_template/issues/9) |
+| 部署狀態清查 | [#10](https://github.com/ycpss91255-docker/system_repo_template/issues/10) |
+| 新增／移除模組的流程 | [#11](https://github.com/ycpss91255-docker/system_repo_template/issues/11) |
+
+另外，示範只在 Linux + docker compose v5 + just 1.x 上跑過。
